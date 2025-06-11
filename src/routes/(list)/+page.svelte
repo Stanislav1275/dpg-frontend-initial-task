@@ -2,15 +2,15 @@
 	/**
 	 * Dependence
 	 */
-	import PostsApi from '$lib/api/methods/posts';
+	import PostsApi from '@api/methods/posts';
 	import { getReasonPhrase } from 'http-status-codes';
 
 	/**
 	 * Components
 	 */
-	import Feed from '$lib/components/feed/Feed.svelte';
-	import Loader from '$lib/components/shared/Loader.svelte';
-	import ErrorComponent from '$lib/components/shared/Error.svelte';
+	import Loader from '@shared/Loader.svelte';
+	import ErrorComponent from '@shared/Error.svelte';
+	import Feed from '@pages/main/components/feed/Feed.svelte';
 
 	/**
 	 * Load data
@@ -25,7 +25,6 @@
 
 		return response.data;
 	};
-
 </script>
 
 {#await loadData()}

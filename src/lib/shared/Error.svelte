@@ -1,5 +1,5 @@
 <h1 class="error">
-	<slot />
+	<slot></slot>
 </h1>
 
 <style lang="scss">

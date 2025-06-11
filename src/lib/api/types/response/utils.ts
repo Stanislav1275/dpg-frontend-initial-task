@@ -1,7 +1,7 @@
 /**
  * Types
  */
-import type {StatusCodes} from "http-status-codes";
+import type { StatusCodes } from 'http-status-codes';
 
 /**
  * Интерфейс ответа от сервера

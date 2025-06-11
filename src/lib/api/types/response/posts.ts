@@ -1,3 +1,3 @@
-import type { IPost } from '$lib/api/types/models/post';
+import type { IPost } from '@api/types/models/post';
 
 export type IPostsResponse = IPost[];

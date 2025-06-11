@@ -1,14 +1,14 @@
 /**
  * Dependence
  */
-import {isAxiosError} from "axios";
-import {StatusCodes} from "http-status-codes";
+import { isAxiosError } from 'axios';
+import { StatusCodes } from 'http-status-codes';
 
 /**
  * Dependence Types
  */
-import type {AxiosError} from "axios";
-import type {IErrorResponse} from "$lib/api/types/response/utils";
+import type { AxiosError } from 'axios';
+import type { IErrorResponse } from '$lib/api/types/response/utils';
 
 /**
  * Interface of error utils
@@ -48,7 +48,7 @@ export const ErrorUtils: ErrorUtils = {} as ErrorUtils;
  */
 ErrorUtils.log = function (
 	error: AxiosError | unknown,
-	title: string = "API: unknown error"
+	title: string = 'API: unknown error'
 ): void {
 	if (isAxiosError(error)) {
 		console.error(title, error?.response?.data?.message ?? error?.message ?? error);
@@ -62,13 +62,14 @@ ErrorUtils.log = function (
  * @param {AxiosError} error - Axios error
  */
 ErrorUtils.isCancelError = function (error: AxiosError) {
-	return error?.name === "CanceledError";
+	return error?.name === 'CanceledError';
 };
 
 ErrorUtils.getErrorReason = function (error: AxiosError | unknown): IErrorResponse {
-	if (!isAxiosError(error)) return {success: false, data: {code: 500, message: "Unknown error"}};
+	if (!isAxiosError(error))
+		return { success: false, data: { code: 500, message: 'Unknown error' } };
 
-	if (error.name === "CancelError" || error.message === "canceled") {
+	if (error.name === 'CancelError' || error.message === 'canceled') {
 		return {
 			success: false,
 			data: {
@@ -79,7 +80,7 @@ ErrorUtils.getErrorReason = function (error: AxiosError | unknown): IErrorRespon
 		};
 	}
 
-	if (error.code === "ERR_NETWORK") {
+	if (error.code === 'ERR_NETWORK') {
 		return {
 			success: false,
 			data: {

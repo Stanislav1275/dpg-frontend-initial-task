@@ -1,16 +1,16 @@
 /**
  * Dependence
  */
-import { catchrequest, checkokstatus } from '$lib/api/utils/requests';
-import { api } from '$lib/api/api';
-import { ErrorUtils } from '$lib/utils/error';
+import { api } from '@api/api';
+import { ErrorUtils } from '@utils/error';
+import { catchrequest, checkokstatus } from '@api/utils/requests';
 
 /**
  * Types
  */
 import type { AxiosError } from 'axios';
-import type { IPostsResponse } from '$lib/api/types/response/posts';
-import type { ISuccessResponse, ServerResponse } from '$lib/api/types/response/utils';
+import type { IPostsResponse } from '@api/types/response/posts';
+import type { ISuccessResponse, ServerResponse } from '@api/types/response/utils';
 
 /**
  * Get All

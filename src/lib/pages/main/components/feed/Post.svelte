@@ -7,13 +7,12 @@
 	/**
 	 * Types
 	 */
-	import type { IPost } from '$lib/api/types/models/post';
+	import type { IPost } from '@api/types/models/post';
 
 	export let post: IPost;
 </script>
 
-<div class="posts__item"
-		 in:fade>
+<div class="posts__item" in:fade>
 	<h4>{post.title}</h4>
 	<p>{post.body}</p>
 </div>
@@ -32,9 +31,8 @@
 
     background: rgba(0, 0, 0, 0.08);
 
-
     h4 {
-      color: #2B302C;
+      color: #2b302c;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
