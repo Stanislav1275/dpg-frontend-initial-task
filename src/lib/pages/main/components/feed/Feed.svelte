@@ -19,10 +19,11 @@
 </div>
 
 <style lang="scss">
-	.posts {
-		display: flex;
-		flex-direction: column;
-		gap: 5px;
-		width: 500px;
-	}
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 500px;
+    max-width: 100%;
+  }
 </style>

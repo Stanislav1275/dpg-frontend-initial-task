@@ -19,12 +19,12 @@
 
 <style lang="scss">
   .posts__item {
-    padding: 10px 15px;
+    padding: 15px 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
 
-    height: 150px;
+    height: max-content;
     width: 100%;
 
     border-radius: 8px;
@@ -36,13 +36,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      text-transform: capitalize;
     }
 
     p {
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 2; /* number of lines to show */
-      line-clamp: 2;
+      -webkit-line-clamp: 3; /* number of lines to show */
+      line-clamp: 3;
       -webkit-box-orient: vertical;
 
       color: rgba(43, 48, 44, 0.7);
