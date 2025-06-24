@@ -7,15 +7,15 @@
 	/**
 	 * Types
 	 */
-	import type { IPost } from '@api/types/models/post';
+	import type { IPost } from '$lib/api/types/models/post';
 
 	export let post: IPost;
 </script>
 
-<div class="posts__item" in:fade>
+<a class="posts__item" href="/post/{post.id}" in:fade>
 	<h4>{post.title}</h4>
 	<p>{post.body}</p>
-</div>
+</a>
 
 <style lang="scss">
   .posts__item {
@@ -28,8 +28,14 @@
     width: 100%;
 
     border-radius: 8px;
+    text-decoration: none;
 
     background: rgba(0, 0, 0, 0.08);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.12);
+    }
 
     h4 {
       color: #2b302c;
@@ -37,14 +43,16 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       text-transform: capitalize;
+      margin: 0;
     }
 
     p {
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3; /* number of lines to show */
+      -webkit-line-clamp: 3;
       line-clamp: 3;
       -webkit-box-orient: vertical;
+      margin: 0;
 
       color: rgba(43, 48, 44, 0.7);
     }
