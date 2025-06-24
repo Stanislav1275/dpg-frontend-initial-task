@@ -51,31 +51,31 @@ export function checkokstatus<TResponse extends AxiosResponse<any>>(
 	/**
 	 * Check is function
 	 */
-	if (typeof ok === 'function') {
-		if (!ok(response)) {
-			throw new AxiosError(
-				response.data?.message || 'unknown error message data',
-				response.status.toString(),
-				response.config,
-				response.request,
-				response
-			);
-		}
-
-		return response;
-	}
-
-	/**
-	 * Check is numbers include
-	 */
-	if (!ObjectUtils.convertToArray(ok).includes(response.status)) {
-		throw new AxiosError(
-			response.data?.message || 'unknown error message data',
+	if (typeof ok === 'function' && !ok(response)) {
+		const error = new AxiosError(
+			response.data?.message || 'Unknown error',
 			response.status.toString(),
 			response.config,
 			response.request,
 			response
 		);
+		error.status = response.status;
+		throw error;
+	}
+
+	/**
+	 * Check is numbers include
+	 */
+	if (Array.isArray(ok) && !ObjectUtils.convertToArray(ok).includes(response.status)) {
+		const error = new AxiosError(
+			response.data?.message || 'Unknown error',
+			response.status.toString(),
+			response.config,
+			response.request,
+			response
+		);
+		error.status = response.status;
+		throw error;
 	}
 
 	return response;

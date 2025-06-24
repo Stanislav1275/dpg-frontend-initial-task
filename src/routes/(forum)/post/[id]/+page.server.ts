@@ -10,37 +10,29 @@ export const config = {
 };
 
 export const load: PageServerLoad = async ({ params }) => {
-	try {
-		const postId = parseInt(params.id);
-		if (isNaN(postId)) {
-			throw error(400, 'Invalid post ID');
-		}
-
-		const { success, data: post } = await PostsApi.getById(postId);
-
-		if (!success) {
-			throw error(404, 'Post not found');
-		}
-
-
-
-		return {
-			post,
-			meta: {
-				title: post.title,
-				description: post.body.substring(0, 160)
-			}
-		};
-	} catch (err) {
-		console.error('Error fetching post:', err);
-		if (err.status === 404) {
-			throw error(404, 'Post not found');
-		}
-		throw error(500, 'Failed to fetch post');
+	const postId = parseInt(params.id);
+	if (isNaN(postId)) {
+		throw error(400, 'Invalid post ID');
 	}
+
+	const response = await PostsApi.getById(postId);
+
+	if (!response.success) {
+		if (response.data.code === 404) {
+			throw error(404, 'Post not found');
+		}
+		throw error(response.data.code, response.data.message);
+	}
+
+	return {
+		post: response.data,
+		meta: {
+			title: response.data.title,
+			description: response.data.body.substring(0, 160)
+		}
+	};
 };
 
-// Enable prerendering for SEO
 export const prerender = false;
 export const ssr = true;
 export const csr = true;

@@ -1,5 +1,7 @@
-import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import PostsApi from '@api/methods/posts';
+
+import type { PageServerLoad } from './$types';
 
 export const config = {
     isr: {
@@ -7,30 +9,21 @@ export const config = {
     }
 };
 
-export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
-    try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-        
-        if (!response.ok) {
-            throw error(500, 'Failed to fetch posts');
-        }
+export const load: PageServerLoad = async () => {
+    const response = await PostsApi.getAll();
 
-        const posts = await response.json();
-
-        // Устанавливаем заголовки кеширования для этого роута
-        setHeaders({
-            'Cache-Control': 'public, max-age=60, stale-while-revalidate=300'
-        });
-
-        return {
-            posts,
-            meta: {
-                title: 'Latest Posts | Blog',
-                description: 'Read our latest blog posts'
-            }
-        };
-    } catch (err) {
-        console.error('Error fetching posts:', err);
-        throw error(500, 'Failed to fetch posts');
+    if (!response.success) {
+        throw error(
+            response.data.code,
+            response.data.message || 'Failed to fetch posts'
+        );
     }
+
+    return {
+        posts: response.data,
+        meta: {
+            title: 'Latest Posts | Blog',
+            description: 'Read our latest blog posts'
+        }
+    };
 }; 

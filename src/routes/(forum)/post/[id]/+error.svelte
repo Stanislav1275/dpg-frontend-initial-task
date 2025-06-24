@@ -3,19 +3,15 @@
 </script>
 
 <svelte:head>
-    <title>{$page.status === 404 ? 'Page Not Found' : 'Error'} | Blog</title>
+    <title>Post Not Found | Blog</title>
     <meta name="robots" content="noindex" />
 </svelte:head>
 
 <div class="error-container">
-    <h1>{$page.status}</h1>
-    {#if $page.status === 404}
-        <p>Page not found</p>
-        <p class="error-details">oppss</p>
-    {:else}
-        <p>{$page.error?.message || 'Something went wrong'}</p>
-    {/if}
-    <a href="/" class="back-link">← Back to Home</a>
+    <h1>404</h1>
+    <p>Post not found</p>
+    <p class="error-details">The post you're looking for doesn't exist</p>
+    <a href="/" class="back-link">← Back to Posts</a>
 </div>
 
 <style lang="scss">

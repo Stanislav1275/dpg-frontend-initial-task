@@ -91,22 +91,22 @@ ErrorUtils.getErrorReason = function (error: AxiosError | unknown): IErrorRespon
 		};
 	}
 
+	const statusCode = error.status || error.response?.status || 500;
+
 	if (error.response?.data) {
-		return error.response.data;
-	} else if (error.response) {
 		return {
 			success: false,
 			data: {
-				code: error.response.status,
-				message: error.response.statusText
+				...error.response.data,
+				code: statusCode
 			}
 		};
 	} else {
 		return {
 			success: false,
 			data: {
-				code: error.status as number,
-				message: error.message
+				code: statusCode,
+				message: error.message || 'Unknown error'
 			}
 		};
 	}
