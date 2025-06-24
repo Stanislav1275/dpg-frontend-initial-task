@@ -1,49 +1,46 @@
 import { error } from '@sveltejs/kit';
+import PostsApi from '@api/methods/posts';
+
 import type { PageServerLoad } from './$types';
 
 export const config = {
-    isr: {
-        expiration: 3600
-    }
+	isr: {
+		expiration: 3600
+	}
 };
 
-export const load: PageServerLoad = async ({ fetch, params, setHeaders }) => {
-    try {
-        const postId = parseInt(params.id);
-        if (isNaN(postId)) {
-            throw error(400, 'Invalid post ID');
-        }
+export const load: PageServerLoad = async ({ params }) => {
+	try {
+		const postId = parseInt(params.id);
+		if (isNaN(postId)) {
+			throw error(400, 'Invalid post ID');
+		}
 
-        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
-        
-        if (!response.ok) {
-            throw error(404, 'Post not found');
-        }
+		const { success, data: post } = await PostsApi.getById(postId);
 
-        const post = await response.json();
+		if (!success) {
+			throw error(404, 'Post not found');
+		}
 
-        // Устанавливаем заголовки кеширования для этого роута
-        setHeaders({
-            'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400'
-        });
 
-        return {
-            post,
-            meta: {
-                title: post.title,
-                description: post.body.substring(0, 160)
-            }
-        };
-    } catch (err) {
-        console.error('Error fetching post:', err);
-        if (err.status === 404) {
-            throw error(404, 'Post not found');
-        }
-        throw error(500, 'Failed to fetch post');
-    }
+
+		return {
+			post,
+			meta: {
+				title: post.title,
+				description: post.body.substring(0, 160)
+			}
+		};
+	} catch (err) {
+		console.error('Error fetching post:', err);
+		if (err.status === 404) {
+			throw error(404, 'Post not found');
+		}
+		throw error(500, 'Failed to fetch post');
+	}
 };
 
 // Enable prerendering for SEO
 export const prerender = false;
 export const ssr = true;
-export const csr = true; 
+export const csr = true;
